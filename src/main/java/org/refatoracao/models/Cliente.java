@@ -1,6 +1,7 @@
 package org.refatoracao.models;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Cliente {
@@ -44,6 +45,29 @@ public class Cliente {
         resultado += "Valor total devido: " + valorTotal + fimDeLinha;
         resultado += "Você acumulou " + pontosDeAlugadorFrequente + " pontos de alugador frequente";
 
+        return resultado;
+    }
+
+
+    public String extratoHTML() {
+        final String fimDeLinha = System.getProperty("line.separator");
+        Iterator<Aluguel> alugueis = dvdsAlugados.iterator();
+        String resultado = "<H1>Registro de Alugueis de <EM>" + getNome() +
+                "</EM></H1><P>" + fimDeLinha;
+        while(alugueis.hasNext()) {
+            Aluguel cada = alugueis.next();
+// mostra valores para este aluguel
+
+            resultado += cada.getDVD().getTítulo() + ": R$ " +
+
+                    cada.getDVD().getCalculadoraPreco().calcularPreco(cada.getDiasAlugado()) + "<BR>"+ fimDeLinha;
+        } // while
+// adiciona rodapé
+        resultado += "<P>Valor total pago: <EM>R$ " + getValorTotal() +
+                "</EM>"+ fimDeLinha;
+        resultado += "<P>Voce acumulou <EM>" +
+                getPontosTotaisDeAlugadorFrequente() +
+                " pontos </EM> de alugador frequente";
         return resultado;
     }
 }
